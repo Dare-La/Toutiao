@@ -2,7 +2,9 @@
   <div>
     <!-- 路由挂载点 -->
     <div class="home_container">
-  <router-view></router-view>
+   <keep-alive>
+      <router-view></router-view>
+  </keep-alive>
     </div>
 
     <!-- 底部导航 -->

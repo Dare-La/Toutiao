@@ -54,9 +54,11 @@
 
 <script>
 import { LoginAPI } from '@/api/index'
-import { Notify } from 'vant'
+import Notify from '@/ui/Notify'
 import { setToken } from '@/utils/token'
+import { setStorage } from '@/utils/storage'
 export default {
+  name: 'Login',
   data () {
     return {
       user: {
@@ -76,14 +78,18 @@ export default {
         console.log(res)
         // 将token存储到本地
         setToken(res.data.data.token)
+        // 将refresh_token存储到本地
+        setStorage('refresh_token', res.data.data.refresh_token)
+
         // 成功通知
         Notify({ type: 'success', message: '登陆成功' })
         // 登陆成功跳转
         this.$router.replace({
-          path: '/layout/home'
+          path: this.$route.query.path || '/layout/home'
         })
       } catch (error) { // 捕获错误并提示
         Notify({
+          type: 'warning',
           message: '账号或密码错误',
           color: '255, 98, 96',
           background: '255, 98, 96'
